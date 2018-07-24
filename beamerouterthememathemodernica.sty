@@ -1,0 +1,163 @@
+% Cloned from default outer theme, copyright 2007 Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+
+\usepackage{calc}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\mode<presentation>
+
+%\useoutertheme{default}
+
+\setbeamersize{text margin left=0.05\paperwidth,text margin right=0.05\paperwidth}
+
+\newdimen\beamerheadheight
+\newdimen\beamerheaddepth
+\newdimen\beamerfootheight
+\newdimen\mathematicatopline
+\newdimen\mathematicabottomline
+\usebeamerfont{frametitle}
+\beamerheadheight=3ex
+\beamerheaddepth=1ex
+\reset@font
+\usebeamerfont{footline}
+\beamerfootheight=2\baselineskip
+\reset@font
+\mathematicatopline=2.5pt
+\mathematicabottomline=1pt
+
+% Set the default logo
+% \logo{\pgfuseimage{mathematica-logo}}
+% \pgfdeclareimage[height=\beamerfootheight]{mathematica-logo}{mathematica-logo-simplified.pdf}
+
+% Set the default title image
+% \pgfdeclareimage[height=7cm]{title-logo}{mathematica-logo-simplified.pdf}
+% \logo{\pgfuseimage{mathematica-logo}}
+
+% Specialized command for classification
+\def\@classification{}
+\newcommand{\classification}[1]{\gdef\@classification{#1}}
+
+% Specialized command for venue
+\def\@venue{}
+\newcommand{\venue}[1]{\gdef\@venue{#1}}
+
+% Specialized command for location
+\def\@location{}
+\newcommand{\location}[1]{\gdef\@location{#1}}
+
+% Title page
+\setbeamertemplate{title page}
+{%
+  \begin{tikzpicture}[remember picture, overlay]%
+    \node[anchor=north west] (logo) at ($(current page.north west)+(\beamer@leftmargin,0)$) {%
+      \insertlogo%
+    };%
+    \node[anchor=north west,text width=0.7\textwidth] (title) at ($(current page.north west)+(0.3\textwidth,-3cm)$) {%
+      \usebeamerfont{title}\strut\inserttitle%
+    };%
+    \node[anchor=north west,text width=0.7\textwidth,inner sep=6pt] (subtitle) at (title.south west) {%
+      \usebeamerfont{subtitle}\strut\insertsubtitle%
+    };%
+    \node[anchor=north west,text width=0.7\textwidth] (date) at ($(subtitle.south west)+(0cm,-.8cm)$) {%
+      \usebeamerfont{date}\strut\@venue\\\hspace{6pt}\strut\@location\\\hspace{12pt}\strut\insertdate%
+    };%
+    \node[anchor=north west,text width=0.7\textwidth] (author) at ($(date.south west)+(0cm,-1cm)$) {%
+      \usebeamerfont{author}\strut\insertauthor%
+    };%
+    \node[anchor=north east] (tg) at (title.north west) {%
+      \inserttitlegraphic%
+    };%
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{frametitle}
+{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[sep=0pt,wd=\paperwidth,ht=\beamerheadheight,dp=\beamerheaddepth,center]{frametitle}%
+    {\usebeamerfont{frametitle}\strut\insertframetitle\par}%
+  \end{beamercolorbox}%
+  {\usebeamerfont{framesubtitle}\vskip -\baselineskip}%
+  \begin{beamercolorbox}[wd=\textwidth,right]{framesubtitle}%
+    {\usebeamerfont{framesubtitle}\strut\insertframesubtitle\par}%
+  \end{beamercolorbox}%
+}
+
+% Headline and footline
+
+\setbeamertemplate{headline}
+{%
+}
+
+% Navigation symbols
+\setbeamertemplate{navigation symbols}
+{%
+  %\vbox{%
+  %\hbox{\insertslidenavigationsymbol}
+  %\hbox{\insertframenavigationsymbol}
+  %\hbox{\insertsubsectionnavigationsymbol}
+  %\hbox{\insertsectionnavigationsymbol}
+  %\hbox{\insertdocnavigationsymbol}
+  %\hbox{\insertbackfindforwardnavigationsymbol}
+  %}%
+}
+
+\setbeamertemplate{footline}
+{
+  \vfill%
+  \hskip 6pt%
+  \rlap{\insertlogo}%
+  \hfill%
+  \hskip -\beamer@leftmargin%
+  \hskip 6pt%
+  \ifnum \value{page}=1%
+  \else%
+  %\raisebox{0.5\baselineskip}{
+  \insertframenumber%
+  %}%
+  \fi%
+  \hfill%
+  \llap{\usebeamertemplate***{navigation symbols}}%
+  \vskip 6pt
+  \begin{tikzpicture}[remember picture,overlay]
+    \coordinate (p1) at (current page.south west);
+    \coordinate (p2) at (current page.south east);
+    \draw[line width=3pt, draw=mathematica blue] (p1) -- (p2);
+  \end{tikzpicture}
+}
+
+
+% background
+
+%\setbeamertemplate{background}
+%{}
+
+%\setbeamertemplate{background canvas}
+%{
+%  \ifbeamercolorempty[bg]{background canvas}{}{\color{bg}\vrule width\paperwidth height\paperheight}%
+%}
+
+
+% Sidebars (including navigation symbols)
+
+\setbeamertemplate{sidebar left}
+{
+}
+
+\setbeamertemplate{sidebar right}
+{
+}
+
+\setbeamertemplate{sidebar canvas left}
+{%
+}
+
+\setbeamertemplate{sidebar canvas right}
+{%
+}
+
+\mode<all>
