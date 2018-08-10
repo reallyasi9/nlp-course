@@ -2,6 +2,8 @@
 
 \documentclass[smaller,xcolor=table,aspectratio=169]{beamer}
 
+\usepackage{listings}
+
 \mode<presentation>
 {
 \usetheme{PrincetonJunction}
@@ -21,21 +23,21 @@
 
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
-\author{Author \and Author \and Author\\Author \and Author \and Author}
+\author{Phil Killewald}
 
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
-\institute[Universities of]
-{
-\inst{1}Department of Computer Science, Univ of S
-\and
-\inst{2}Department of Theoretical Philosophy, Univ of E
-}
+% \institute[Universities of]
+% {
+% \inst{1}Department of Computer Science, Univ of S
+% \and
+% \inst{2}Department of Theoretical Philosophy, Univ of E
+% }
 
 % Should also contain the venue
-\date{Presentation at the XXX Conference\\
-City, State\\
-Date 201x}
+\venue{Presentation at the XXX Conference}
+\location{City, State}
+\date{\today}
 
 
 % This is only inserted into the PDF information catalog. Can be left
@@ -45,7 +47,7 @@ Date 201x}
 
 
 % Then you can add a logo as follows:
-\pgfdeclareimage[height=\beamerheadheight]{big-m}{logos/m-impact_blue_rays.pdf}
+\pgfdeclareimage[height=5cm]{big-m}{logos/m-impact_blue_rays.pdf}
 \titlegraphic{\pgfuseimage{big-m}}
 \pgfdeclareimage[height=18pt]{mathematica-logo}{logos/m-impact_blue_rays.pdf}
 \logo{\pgfuseimage{mathematica-logo}}
@@ -117,12 +119,182 @@ Date 201x}
 \begin{frame}
   \frametitle{Revelance to MPR}
   Doctor's notes:  understanding a Medicare patient's condition to better predict the outcome of a particular surgical procedure
+  Case worker visitation notes:  predicting job search outcomes using written descriptions of home life
   Policy rules:  collecting different states' policies concerning a particular social service (e.g., child abuse prevention) to compare and contrast implementation
   Interview transcripts:  extracting and highlighting common topics from thousands of on-site interviews to evaluate policy understanding by practitioners
-  Academic studies:  detect and gather high-quality articles for systematic review
+  Academic studies:  detecting and gathering high-quality articles for systematic review
 \end{frame}
 
 \begin{frame}
+  \frametitle{Course Timeline}
+  \begin{enumerate}
+    \item Course Introduction
+    \item Computer Representation of Text \& Canned Libraries
+    \item Preparing Text
+    \item Traditional NLP
+    \item Quantification of Text
+    \item Modern Quantification of Text
+    \item State-of-the-Art Quantification of Text
+  \end{enumerate}
+\end{frame}
+
+\section{Computer Representations of Text}
+
+\begin{frame}
+  \frametitle{Bytes}
+  Computers understand bytes.
+  Byte: an 8-digit binary number
+  Bytes can take values from 0 to 255.
+  Everything a computer does is based around bytes:
+  Integer math
+  Booleans
+  Floating point operations
+  File reading/writing
+  Literally everything.
+  But people understand glyphs
+  I mean, people understand numbers as well, but those are pictoral representations of concepts.  People read and understand the pictures.
+\end{frame}
+
+\begin{frame}
+  \frametitle{ASCII}
+  Ancient computers communicated everything using bytes.
+  Picture of ENIAC
+  This was annoying.
+\end{frame}
+
+\begin{frame}[plain]
+  (American) computer scientists developed a way for computers to represent text for input and output purposes.
+  ASCII: American Standard Code for Information Interchange
+  Standard that encodes numbers 0 through 127 as Latin glyphs.
+  (table)
+  65 = A
+  90 = Z
+  97 = a
+  122 = z
+  33 = !
+  63 = ?
+  32 = (space)
+  10 = (line feed)
+  6 = (acknowledgement)
+\end{frame}
+
+\begin{frame}[plain]
+  Problems with ASCII:
+  Other languages use more glyphs than those in American English:
+  £
+  ¿
+  á
+  «»
+  Temporary solution: use that 8th bit!
+  (add ISO 8859-1 to table)
+\end{frame}
+
+\begin{frame}[plain]
+  Windows:  Looks like you forgot some curley quote marks, so I fixed it for you.
+  (add Windows-1252)
+\end{frame}
+
+\newfontface\hebfont{NotoSansHebrew}[Scale=MatchLowercase]
+\newfontface\chkfont{NotoSansCherokee}[Scale=MatchLowercase]
+\newfontface\chnfont{NotoSansCJKsc}[Scale=MatchLowercase]
+\newcommand{\hebtxt}[1]% Hebrew text inside LTR
+    {\bgroup\textdir TRT\hebfont #1\egroup}
+
+\begin{frame}
+  \frametitle{Problems}
+  Turns out there are languages out there other than those that use forms of the Latin alphabet.
+  \begin{itemize}
+    \item hello world
+    \item Здравствуй, мир (ru)
+    \item \hebtxt{שלום עולם} (he)
+    \item {\chkfont ᎣᏏᏲ ᎡᎶᎯ} (ck)
+    \item {\chnfont 你好世界} (cn)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unicode}
+  Solution:  Variable-width encoding (specifically, UTF-8)
+  Advantages:
+  \begin{itemize}
+    \item Large number of symbols ($17$ {\em planes} of $2^{16}$ {\em code points})
+    \item Backwards-compatable with ASCII (7-bit) and some extended ASCII (8-bit) symbols
+  \end{itemize}
+  Disadvantages:
+  \begin{itemize}
+    \item Lengths of strings are hard
+    \begin{itemize}
+      \item Number of bytes != number of code points
+      \item Number of code points != number of glyphs
+    \end{itemize}
+    \item Microsoft is difficult
+    \begin{itemize}
+      \item Curly quotes, elipses, dashes, bullets, etc. in {\em continuation code} space of UTF-8
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\newfontface\emojifont{NotoEmoji-Regular}
+\begin{frame}
+  \frametitle{Examples}
+  Hi, world!
+  48 69 2c 20 77 6f 72 6c 64 21
+
+  Hi, {\emojifont 🌎}!
+  48 69 2c 20 f09f8c8e 21
+
+  Hi, {\emojifont 🇺🇸}!
+  48 69 2c 20 f09f87ba f09f87b8 21
+\end{frame}
+
+\begin{frame}
+  \frametitle{Getting It Wrong}
+  \begin{enumerate}
+    \item Using the wrong encoding can make text undecypherable.
+    \item Encoding information is out-of-band--you must be told what encoding to use.
+    \item Nobody will have any idea what you are talking about.
+  \end{enumerate}
+
+  48 69 2c 20 f0 9f 87 ba f0 9f 87 b8 21
+  UTF-8: Hi, {\emojifont 🇺🇸}!
+  Windows-1252: Hi, ðŸ‡°ðŸ‡¸!
+\end{frame}
+
+\lstset{language=Python}
+\lstset{
+  morekeywords={with,as},
+  morekeywords={[2]>>>}
+}
+\lstdefinestyle{mystyle}{
+  basicstyle=\footnotesize\color{black}\ttfamily,
+  backgroundcolor=\color{mathematica light neutral},
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  % Color settings
+  keywordstyle=\color{mathematica brown}\bfseries, % core keywords
+  keywordstyle={[2]\color{mathematica dark purple}\bfseries}, % built-ins
+  keywordstyle={[3]\color{mathematica neutral}\bfseries}, % built-ins
+  stringstyle=\color{mathematica dark green},
+  commentstyle=\color{mathematica dark neutral}\itshape,
+  upquote=true
+}
+
+\begin{frame}[fragile]
+  \frametitle{Guessing (Intelligently)}
+  chardet
+  \begin{lstlisting}[style=mystyle]
+>>> import urllib.request
+>>> import chardet
+>>> with urllib.request.urlopen('http://google.co.jp') as req:
+>>>     rawdata = req.read()
+>>>     for x in rawdata:
+>>>         pass
+>>>     chardet.detect(rawdata)
+{'encoding': 'Windows-1252', 'confidence': 0.73, 'language': ''}
+  \end{lstlisting}
 
 \end{frame}
 

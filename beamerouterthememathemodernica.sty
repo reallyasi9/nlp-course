@@ -63,10 +63,10 @@
     \node[anchor=north west,text width=0.7\textwidth,inner sep=6pt] (subtitle) at (title.south west) {%
       \usebeamerfont{subtitle}\strut\insertsubtitle%
     };%
-    \node[anchor=north west,text width=0.7\textwidth] (date) at ($(subtitle.south west)+(0cm,-.8cm)$) {%
-      \usebeamerfont{date}\strut\@venue\\\hspace{6pt}\strut\@location\\\hspace{12pt}\strut\insertdate%
+    \node[anchor=north west,text width=0.7\textwidth] (date) at ($(subtitle.south west)+(0cm,-.4cm)$) {%
+      \usebeamerfont{date}\strut\@venue\\\strut\@location\\\strut\insertdate%
     };%
-    \node[anchor=north west,text width=0.7\textwidth] (author) at ($(date.south west)+(0cm,-1cm)$) {%
+    \node[anchor=south west,text width=0.7\textwidth] (author) at ($(date.south west)+(0cm,-.4cm)$) {%
       \usebeamerfont{author}\strut\insertauthor%
     };%
     \node[anchor=north east] (tg) at (title.north west) {%
