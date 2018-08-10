@@ -3,11 +3,19 @@
 \documentclass[smaller,xcolor=table,aspectratio=169]{beamer}
 
 \usepackage{listings}
+\usepackage[table]{xcolor}
+
+% Useful for writing out a space character
+% See https://tex.stackexchange.com/a/50807
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
 
 \mode<presentation>
 {
 \usetheme{PrincetonJunction}
-\setbeamercovered{transparent}
+\setbeamercovered{invisible}
 }
 
 % - These packages are used because Mathematica's "official" font is Arial,
@@ -17,9 +25,9 @@
 %   lines, add a usepackage command for babel, and go from there.  Just don't
 %   be sad when you get in trouble with the Communications department.
 
-\title[Short Title]{Title of Presentation}
+\title[NLP Course 1]{Natural Language Processing}
 
-\subtitle{Subtitle}
+\subtitle{Text, Numbers, and Computers}
 
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -35,14 +43,13 @@
 % }
 
 % Should also contain the venue
-\venue{Presentation at the XXX Conference}
-\location{City, State}
-\date{\today}
-
+\venue{Part of the Mathematica Advanced Analytics Training Series}
+\location{Course 1 of N}
+\date{Originally written in August of 2018}
 
 % This is only inserted into the PDF information catalog. Can be left
 % out.
-\subject{Talks}
+\subject{Courses}
 
 
 
@@ -86,8 +93,8 @@
 
 \begin{frame}[plain]
 \begin{centering}
-  Natural Language Processing
-  for the purposes of this course
+  Natural Language Processing\\
+  (for the purposes of this course)\\
   Converting written human communications into quantitative data
 \end{centering}
 \end{frame}
@@ -118,11 +125,13 @@
 
 \begin{frame}
   \frametitle{Revelance to MPR}
-  Doctor's notes:  understanding a Medicare patient's condition to better predict the outcome of a particular surgical procedure
-  Case worker visitation notes:  predicting job search outcomes using written descriptions of home life
-  Policy rules:  collecting different states' policies concerning a particular social service (e.g., child abuse prevention) to compare and contrast implementation
-  Interview transcripts:  extracting and highlighting common topics from thousands of on-site interviews to evaluate policy understanding by practitioners
+  Doctor's notes:  understanding a Medicare patient's condition to better predict the outcome of a particular surgical procedure\\
+  Case worker visitation notes:  predicting job search outcomes using written descriptions of home life\\
+  Policy rules:  collecting different states' policies concerning a particular social service (e.g., child abuse prevention) to compare and contrast implementation\\
+  Interview transcripts:  extracting and highlighting common topics from thousands of on-site interviews to evaluate policy understanding by practitioners\\
   Academic studies:  detecting and gathering high-quality articles for systematic review
+  \vfill{}
+  Note: None of these are designed explicitly to communicate quantifiable information!
 \end{frame}
 
 \begin{frame}
@@ -142,56 +151,76 @@
 
 \begin{frame}
   \frametitle{Bytes}
-  Computers understand bytes.
-  Byte: an 8-digit binary number
-  Bytes can take values from 0 to 255.
-  Everything a computer does is based around bytes:
-  Integer math
-  Booleans
-  Floating point operations
-  File reading/writing
-  Literally everything.
+  Computers understand bytes.\\\pause{}
+  Byte: an 8-digit binary number\\\pause{}
+  Bytes can take values from 0 to 255.\\\pause{}
+  Everything a computer does is based around bytes:\\\pause{}
+  \begin{itemize}
+    \item Integer math
+    \item Booleans
+    \item Floating point operations
+    \item File reading/writing
+    \item Literally everything
+  \end{itemize}
   But people understand glyphs
-  I mean, people understand numbers as well, but those are pictoral representations of concepts.  People read and understand the pictures.
 \end{frame}
 
 \begin{frame}
   \frametitle{ASCII}
-  Ancient computers communicated everything using bytes.
-  Picture of ENIAC
+  Ancient computers communicated everything using bytes.\\
+  \includegraphics[width=.5\textwidth]{images/eniac.jpg}\pause{}\\
   This was annoying.
 \end{frame}
 
+\newcommand{\CNT}{\cellcolor{mathematica green!25}}
+\newcommand{\ALP}{\cellcolor{mathematica orange!25}}
+\newcommand{\PUN}{\cellcolor{mathematica purple!25}}
 \begin{frame}[plain]
-  (American) computer scientists developed a way for computers to represent text for input and output purposes.
-  ASCII: American Standard Code for Information Interchange
-  Standard that encodes numbers 0 through 127 as Latin glyphs.
-  (table)
-  65 = A
-  90 = Z
-  97 = a
-  122 = z
-  33 = !
-  63 = ?
-  32 = (space)
-  10 = (line feed)
-  6 = (acknowledgement)
+  (American) computer scientists developed a way for computers to represent text for input and output purposes.\\
+  ASCII: American Standard Code for Information Interchange\\
+  Standard that encodes numbers 0 through 127 (0x00 through 0x7F) as Latin glyphs.\\
+  \begin{table}
+    \tiny\ttfamily
+    \begin{tabular}{r|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+      & \_0 & \_1 & \_2 & \_3 & \_4 & \_5 & \_6 & \_7 & \_8 & \_9 & \_A & \_B & \_C & \_D & \_E & \_F \\ \hline
+      0\_ & \CNT nul & \CNT soh & \CNT stx & \CNT etx & \CNT eot & \CNT enq & \CNT ack & \CNT bel & \CNT bs & \CNT ht & \CNT lf & \CNT vt & \CNT ff & \CNT cr & \CNT so & \CNT si \\
+      1\_ & \CNT dle & \CNT dc1 & \CNT dc2 & \CNT dc3 & \CNT dc4 & \CNT nak & \CNT syn & \CNT etb & \CNT can & \CNT em & \CNT sub & \CNT esc & \CNT fs & \CNT gs & \CNT rs & \CNT us \\
+      2\_ & \PUN \Vtextvisiblespace & \PUN ! & \PUN " & \PUN \# & \PUN \$ & \PUN \% & \PUN \& & \PUN ' & \PUN ( & \PUN ) & \PUN * & \PUN + & \PUN , & \PUN - & \PUN . & \PUN / \\
+      3\_ & \ALP 0 & \ALP 1 & \ALP 2 & \ALP 3 & \ALP 4 & \ALP 5 & \ALP 6 & \ALP 7 & \ALP 8 & \ALP 9 & \PUN : & \PUN ; & \PUN < & \PUN = & \PUN > & \PUN ? \\
+      4\_ & \PUN @ & \ALP A & \ALP B & \ALP C & \ALP D & \ALP E & \ALP F & \ALP G & \ALP H & \ALP I & \ALP J & \ALP K & \ALP L & \ALP M & \ALP N & \ALP O \\
+      5\_ & \ALP P & \ALP Q & \ALP R & \ALP S & \ALP T & \ALP U & \ALP V & \ALP W & \ALP X & \ALP Y & \ALP Z & \PUN [ & \PUN \textbackslash & \PUN ] & \PUN \textasciicircum & \PUN \_ \\
+      6\_ & \PUN ` & \ALP a & \ALP b & \ALP c & \ALP d & \ALP e & \ALP f & \ALP g & \ALP h & \ALP i & \ALP j & \ALP k & \ALP l & \ALP m & \ALP n & \ALP o \\
+      7\_ & \ALP p & \ALP q & \ALP r & \ALP s & \ALP t & \ALP u & \ALP v & \ALP w & \ALP x & \ALP y & \ALP z & \PUN \{ & \PUN | & \PUN \} & \PUN \textasciitilde & \CNT del \\
+    \end{tabular}
+  \end{table}
 \end{frame}
 
+\newcommand{\UND}{\cellcolor{black}\color{white}}
 \begin{frame}[plain]
-  Problems with ASCII:
-  Other languages use more glyphs than those in American English:
-  £
-  ¿
-  á
-  «»
-  Temporary solution: use that 8th bit!
-  (add ISO 8859-1 to table)
-\end{frame}
-
-\begin{frame}[plain]
-  Windows:  Looks like you forgot some curley quote marks, so I fixed it for you.
-  (add Windows-1252)
+  Problems with ASCII:\\\pause{}
+  Other languages use more glyphs than those in American English:\\\pause{}
+  \begin{itemize}
+    \item £
+    \item ¿
+    \item á
+    \item «»
+  \end{itemize}\pause{}
+  Temporary solution: use that 8th bit!\\
+  \begin{table}
+    \footnotesize
+    \begin{tabular}{r|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+      & \_0 & \_1 & \_2 & \_3 & \_4 & \_5 & \_6 & \_7 & \_8 & \_9 & \_A & \_B & \_C & \_D & \_E & \_F \\ \hline
+      8\_ & \UND {\visible<5->€} & \UND & \UND {\visible<5->‚} & \UND {\visible<5->ƒ} & \UND {\visible<5->„} & \UND {\visible<5->…} & \UND {\visible<5->†} & \UND {\visible<5->‡} & \UND {\visible<5->ˆ} & \UND {\visible<5->‰} & \UND {\visible<5->Š} & \UND {\visible<5->‹} & \UND {\visible<5->Œ} & \UND & \UND {\visible<5->Ž} & \UND \\
+      9\_ & \UND & \UND {\visible<5->‘} & \UND {\visible<5->’} & \UND {\visible<5->“} & \UND {\visible<5->”} & \UND {\visible<5->•} & \UND {\visible<5->–} & \UND {\visible<5->—} & \UND {\visible<5->˜} & \UND {\visible<5->™} & \UND {\visible<5->š} & \UND {\visible<5->›} & \UND {\visible<5->œ} & \UND & \UND {\visible<5->ž} & \UND {\visible<5->Ÿ} \\
+      A\_ & \PUN nbsp & \PUN ¡ & \PUN ¢ & \PUN £ & \PUN ¤ & \PUN ¥ & \PUN ¦ & \PUN § & \PUN ¨ & \PUN © & \PUN ª & \PUN « & \PUN ¬ & \PUN shy & \PUN ® & \PUN ¯ \\
+      B\_ & \PUN ° & \PUN ± & \ALP ² & \ALP ³ & \PUN ´ & \ALP µ & \PUN ¶ & \PUN · & \PUN ¸ & \ALP ¹ & \PUN º & \PUN » & \ALP ¼ & \ALP ½ & \ALP ¾ & \PUN ¿ \\
+      C\_ & \ALP À & \ALP Á & \ALP Â & \ALP Ã & \ALP Ä & \ALP Å & \ALP Æ & \ALP Ç & \ALP È & \ALP É & \ALP Ê & \ALP Ë & \ALP Ì & \ALP Í & \ALP Î & \ALP Ï \\
+      D\_ & \ALP Ð & \ALP Ñ & \ALP Ò & \ALP Ó & \ALP Ô & \ALP Õ & \ALP Ö & \PUN × & \ALP Ø & \ALP Ù & \ALP Ú & \ALP Û & \ALP Ü & \ALP Ý & \ALP Þ & \ALP ß \\
+      E\_ & \ALP à & \ALP á & \ALP â & \ALP ã & \ALP ä & \ALP å & \ALP æ & \ALP ç & \ALP è & \ALP é & \ALP ê & \ALP ë & \ALP ì & \ALP í & \ALP î & \ALP ï \\
+      F\_ & \ALP ð & \ALP ñ & \ALP ò & \ALP ó & \ALP ô & \ALP õ & \ALP ö & \PUN ÷ & \ALP ø & \ALP ù & \ALP ú & \ALP û & \ALP ü & \ALP ý & \ALP þ & \ALP ÿ \\
+    \end{tabular}
+  \end{table}
+  {\visible<5->Windows:  Looks like you forgot some curley quote marks, so I fixed it for you. (Windows-1252)}
 \end{frame}
 
 \newfontface\hebfont{NotoSansHebrew}[Scale=MatchLowercase]
@@ -204,11 +233,10 @@
   \frametitle{Problems}
   Turns out there are languages out there other than those that use forms of the Latin alphabet.
   \begin{itemize}
-    \item hello world
-    \item Здравствуй, мир (ru)
-    \item \hebtxt{שלום עולם} (he)
-    \item {\chkfont ᎣᏏᏲ ᎡᎶᎯ} (ck)
-    \item {\chnfont 你好世界} (cn)
+    \item<1-> hello world
+    \item<2-> Здравствуй, мир (ru)
+    \item<3-> {\chkfont ᎣᏏᏲ ᎡᎶᎯ} (ck)
+    \item<4-> {\chnfont 你好世界} (cn)
   \end{itemize}
 \end{frame}
 
@@ -237,14 +265,44 @@
 \newfontface\emojifont{NotoEmoji-Regular}
 \begin{frame}
   \frametitle{Examples}
-  Hi, world!
-  48 69 2c 20 77 6f 72 6c 64 21
+  \begin{table}
+    \small
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+      \hline
+      48 & 69 & 2c & 20                & 77 & 6f & 72 & 6c & 64 \\ \hline
+      H  & i  & ,  & \Vtextvisiblespace & w  & o  & r  & l  & d \\ \hline
+    \end{tabular}
+  \end{table}
 
-  Hi, {\emojifont 🌎}!
-  48 69 2c 20 f09f8c8e 21
+  \begin{table}
+    \small
+    \begin{tabular}{|c c c|c c c|c c c|c c c|}
+      \hline
+      e4 & bd & a0 & e5 & a5 & bd & e4 & b8 & 96 & e7 & 95 & 8c \\ \hline
+      \multicolumn{3}{|c|}{\chnfont 你} & \multicolumn{3}{c|}{\chnfont 好} & \multicolumn{3}{c|}{\chnfont 世} & \multicolumn{3}{c|}{\chnfont 界} \\ \hline
+    \end{tabular}
+  \end{table}
 
-  Hi, {\emojifont 🇺🇸}!
-  48 69 2c 20 f09f87ba f09f87b8 21
+  \begin{table}
+    \small
+    \begin{tabular}{|c|c|c|c|c c c c|c c c c|}
+      \hline
+      48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 \\ \hline
+      H & i & , & \Vtextvisiblespace & \multicolumn{4}{c|}{\emojifont 🇺} & \multicolumn{4}{c|}{\emojifont 🇸} \\ \hline
+      H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
+    \end{tabular}
+  \end{table}
+
+  \begin{table}
+    \small
+    \begin{tabular}{|c|c|c c c|c|c|c|c|c|c|c|c c c|c|c|}
+      \hline
+      69 & 6e & ef & ac & 81 & 6e & 69 & 74 & 65 & 20 & 77 & 61 & ef & ac & 84 & 65 & 73 \\ \hline
+      i & n & \multicolumn{3}{c|}{ﬁ} & n & i & t & e & \Vtextvisiblespace & w & a & \multicolumn{3}{c|}{ﬄ} & e & s \\ \hline
+      i & n & \multicolumn{3}{c|}{\begin{tabular}{c c} f & i\\ \end{tabular}} & n & i & t & e & \Vtextvisiblespace & w & a & f & f & l & e & s \\ \hline
+    \end{tabular}
+  \end{table}
+
 \end{frame}
 
 \begin{frame}
@@ -255,15 +313,21 @@
     \item Nobody will have any idea what you are talking about.
   \end{enumerate}
 
-  48 69 2c 20 f0 9f 87 ba f0 9f 87 b8 21
-  UTF-8: Hi, {\emojifont 🇺🇸}!
-  Windows-1252: Hi, ðŸ‡°ðŸ‡¸!
+  \begin{table}
+    \small
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+      \hline
+      48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 & 21 \\ \hline
+      H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
+      H & i & , & \Vtextvisiblespace & ð & Ÿ & ‡ & ° & ð & Ÿ & ‡ & ¸ \\ \hline
+    \end{tabular}
+  \end{table}
 \end{frame}
 
 \lstset{language=Python}
 \lstset{
   morekeywords={with,as},
-  morekeywords={[2]>>>}
+  morekeywords=[2]{>>>}
 }
 \lstdefinestyle{mystyle}{
   basicstyle=\footnotesize\color{black}\ttfamily,
@@ -301,22 +365,33 @@
 \section*{Summary}
 
 \begin{frame}
-\frametitle<presentation>{Summary}
-
-\begin{itemize}
-  \item The \alert{first main message} of your talk in one or two lines.
-\end{itemize}
-
-% The following outlook is optional.
-\vfill
-\begin{itemize}
-  \item Outlook
+  \frametitle{Summary}
   \begin{itemize}
-    \item Something you haven't solved.
-    \item Something else you haven't solved.
+    \item NLP means a lot of things
+    \begin{itemize}
+      \item For us at this point in time, we will focus on {\itshape quantification of written human communication}.
+    \end{itemize}
+    \item As a rule, human communication is not meant for quantitative analysis.
+    \begin{itemize}
+      \item We have to come up with ways of converting language into numbers carefully without sacraficing too much of the original meaning.
+    \end{itemize}
+    \item Computers only understand numbers.
+    \begin{itemize}
+      \item Computers represent text for input/output purposes using encodings.
+      \item Encodings are one way of turning text into numbers.
+      \item The universe of standard encodings is a mess, and you cannot control what encodings other people use.
+    \end{itemize}
   \end{itemize}
-\end{itemize}
-\vfill
+  \begin{alertblock}{Takeaway}
+    Always use UTF-8 whenever you possibly can!
+  \end{alertblock}
+\end{frame}
+
+\section*{Homework}
+
+\begin{frame}
+  \frametitle{Homework}
+  Encoding, Decoding, and Counting Glyphs
 \end{frame}
 
 \end{document}
