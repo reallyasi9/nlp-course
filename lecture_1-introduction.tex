@@ -12,11 +12,15 @@
   \vbox{\hrule width#1}%
   \hbox{\vrule height.3ex}}
 
+
+
 \mode<presentation>
 {
 \usetheme{PrincetonJunction}
 \setbeamercovered{invisible}
 }
+
+\usetikzlibrary{arrows,decorations.markings,fit,positioning,calc,shapes.geometric}
 
 % - These packages are used because Mathematica's "official" font is Arial,
 %   which is a TrueType font.  Unfortunately, TrueType fonts cannot be used
@@ -75,6 +79,17 @@
 
 \begin{document}
 
+% Useful for making pieces of a tikz appear with overlays
+% See https://tex.stackexchange.com/a/55849
+\tikzset{
+   invisible/.style={opacity=0,text opacity=0},
+   visible on/.style={alt={#1{}{invisible}}},
+   alt/.code args={<#1>#2#3}{%
+     \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+   },
+   >=stealth,
+ }
+
 {%
 \logo{\rule{0pt}{\beamerfootheight}}%
 \begin{frame}[noframenumbering]%
@@ -92,35 +107,131 @@
 \section{Introduction to Natural Language Processing}
 
 \begin{frame}[plain]
-\begin{centering}
-  Natural Language Processing\\
-  (for the purposes of this course)\\
-  Converting written human communications into quantitative data
-\end{centering}
+\begin{center}
+\begin{tikzpicture}[remember picture]
+  \node[rectangle, anchor=center,
+        inner sep=3mm, rounded corners=3mm, fill=mathematica brown, text=white]
+       (container)
+       {{\huge N}atural\quad {\huge L}anguage\quad {\huge P}\!rocessing};
+  \node[anchor=north, text=mathematica brown, visible on=<2->]
+       (purposes)
+       at ($(container.south)$)
+       {\scriptsize(for the purposes of this course)};
+  \node[anchor=north, text=mathematica dark blue, align=center]
+       (def)
+       at ($(purposes.south)$)
+       {\large Converting \textit{written} \textit{human} communications\\[1.2ex]
+        \large into \textit{quantitiative} data};
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Examples}
-  \begin{itemize}
-    \item Professional Notes
-    \begin{itemize}
-      \item Doctor's notes (Doctor \(\Rightarrow\) Doctor)
-      \item Meeting minutes (Clerk \(\Rightarrow\) Public)
-      \item Shorthand scrawl (Reporter \(\Rightarrow\) Self)
-    \end{itemize}
-    \item Laws and Policies
-    \begin{itemize}
-      \item Legislation
-      \item Executive orders
-      \item Policy rules (Federal Register)
-      \item Court rulings
-    \end{itemize}
-    \item Interview transcriptions
-    \item Academic studies
-    \item Historical literature
-    \item Wikipedia articles
-    \item Random websites
-  \end{itemize}
+
+\begin{frame}[fragile]
+\frametitle{Examples}
+\begin{center}
+\begin{tikzpicture}[font=\scriptsize,
+  container/.style={rectangle, anchor=north, inner sep=3mm, rounded corners=3mm,
+                    draw=mathematica blue, text=mathematica blue, thick},
+  communicant/.style={rectangle, anchor=center,
+                      rounded corners=1mm, color=white},
+  communique/.style={shape=ellipse, anchor=center,
+                     color=mathematica dark blue, draw=mathematica dark blue, align=center},
+  top label/.style={rectangle, anchor=base west,
+        text=mathematica blue, fill=white, font=\small}]
+  \node[matrix, column sep=3mm, row sep=3mm] (m1) {
+    \node[communicant, fill=mathematica dark blue]
+         (doctors)
+         {Doctor}; &
+    \node[communique]
+         (notes)
+         {doctor's\\notes}; &
+    \node[communicant, fill=mathematica brown]
+         (medics)
+         {Medical Staff}; \\
+
+    \node[communicant, fill=mathematica dark blue, visible on=<2->]
+         (clerk)
+         {Clerk}; &
+    \node[communique, visible on=<2->]
+         (minutes)
+         {minutes}; &
+    \node[communicant, fill=mathematica brown, visible on=<2->]
+         (public)
+         {Public}; \\
+
+    \node[communicant, fill=mathematica dark blue, visible on=<3->]
+         (reporter)
+         {Reporter}; &
+    \node[communique, visible on=<3->]
+         (scrawl)
+         {shorthand\\scrawl}; & \\
+  };
+
+  \draw[->] (doctors) to (notes) to (medics);
+  \draw[->, visible on=<2->] (clerk) to (minutes) to (public);
+  \draw[->, visible on=<3->] (reporter) to (scrawl) to [out=-90, in=-45, looseness=.5] (reporter);
+
+  \node[container, fit={(m1)}]
+       (container1)
+       {};
+  \node[top label]
+       at ($(container1.north west) + (3mm,0)$)
+       {Professional Notes};
+
+  \node[matrix, column sep=3mm, row sep=3mm, right=of m1, visible on=<4->] (m2) {
+    \node[communicant, fill=mathematica dark blue]
+         (legislators)
+         {Legislators}; &
+    \node[communique]
+         (laws)
+         {laws}; &
+    \node[communicant, fill=mathematica brown]
+         (populace)
+         {Populace}; \\
+
+    \node[communicant, fill=mathematica dark blue]
+         (president)
+         {President}; &
+    \node[communique]
+         (executive order)
+         {executive\\orders}; &
+    \node[communicant, fill=mathematica brown]
+         (government)
+         {Executive Branch}; \\
+
+    \node[communicant, fill=mathematica dark blue]
+         (servant)
+         {Civil Servant}; &
+    \node[communique]
+         (fr)
+         {Federal\\Register}; &
+    \node[communicant, fill=mathematica brown]
+         (wonks)
+         {Policy Wonks}; \\
+  };
+
+  \draw[->, visible on=<4->] (legislators) to (laws) to (populace);
+  \draw[->, visible on=<4->] (president) to (executive order) to (government);
+  \draw[->, visible on=<4->] (servant) to (fr) to (wonks);
+
+  \node[container, fit={(m2)}, visible on=<4->]
+      (container2)
+      {};
+  \node[top label, visible on=<4->]
+      at ($(container2.north west) + (3mm,0)$)
+      {Laws and Policies};
+
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+  \item Interview transcriptions
+  \item Academic studies
+  \item Historical literature
+  \item Wikipedia articles
+  \item Random websites
+\end{itemize}
 \end{frame}
 
 \begin{frame}
