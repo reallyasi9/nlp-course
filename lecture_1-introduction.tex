@@ -20,7 +20,7 @@
 \setbeamercovered{invisible}
 }
 
-\usetikzlibrary{arrows,decorations.markings,fit,positioning,calc,shapes.geometric}
+\usetikzlibrary{arrows,decorations.markings,fit,positioning,calc,shapes.geometric,shadows.blur,shadings,decorations.pathmorphing}
 
 % - These packages are used because Mathematica's "official" font is Arial,
 %   which is a TrueType font.  Unfortunately, TrueType fonts cannot be used
@@ -128,7 +128,7 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Examples}
+\frametitle{Example Documents}
 \begin{center}
 \begin{tikzpicture}[font=\scriptsize,
   container/.style={rectangle, anchor=north, inner sep=3mm, rounded corners=3mm,
@@ -170,7 +170,8 @@
 
   \draw[->] (doctors) to (notes) to (medics);
   \draw[->, visible on=<2->] (clerk) to (minutes) to (public);
-  \draw[->, visible on=<3->] (reporter) to (scrawl) to [out=-90, in=-45, looseness=.5] (reporter);
+  \draw[-, visible on=<3->] (reporter) to [out=15, in=165] (scrawl);
+  \draw[->, visible on=<3->] (scrawl) to [out=195, in=-15] (reporter);
 
   \node[container, fit={(m1)}]
        (container1)
@@ -202,7 +203,7 @@
 
     \node[communicant, fill=mathematica dark blue]
          (servant)
-         {Civil Servant}; &
+         {Civil Servants}; &
     \node[communique]
          (fr)
          {Federal\\Register}; &
@@ -223,19 +224,47 @@
       {Laws and Policies};
 
 \end{tikzpicture}
-\end{center}
+\\
+\begin{tikzpicture}[visible on=<5->, font=\scriptsize,
+  container/.style={rectangle, anchor=north, inner sep=3mm, rounded corners=3mm,
+                    draw=mathematica blue, text=mathematica blue, thick},
+  communique/.style={shape=ellipse, anchor=center,
+                     color=mathematica dark blue, draw=mathematica dark blue, align=center},
+  top label/.style={rectangle, anchor=base west,
+        text=mathematica blue, fill=white, font=\small}]
 
-\begin{itemize}
-  \item Interview transcriptions
-  \item Academic studies
-  \item Historical literature
-  \item Wikipedia articles
-  \item Random websites
-\end{itemize}
+  \node[matrix, column sep=12mm] (m3) {
+    \node[communique] (transcripts) {interview\\transcriptions}; &
+    \node[communique] (academic) {academic\\papers}; &
+    \node[communique] (wikipedia) {Wikipedia\\articles}; &
+    \node[communique] (random) {random\\websites}; \\
+  };
+
+  \foreach \n in {transcripts,academic,wikipedia,random} {
+    \draw[dotted] ($(\n.west) + (-3mm,0)$)
+                              to ($(\n.west)$);
+    \draw[->,dotted] ($(\n.east)$)
+                              to ($(\n.east) + (3mm,0)$);
+  }
+
+  \node[container, fit={(m3)}]
+       (container3)
+       {};
+  \node[top label]
+       at ($(container3.north west) + (3mm,0)$)
+       {Other Common Documents};
+
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
+
 \begin{frame}
-  \frametitle{Revelance to MPR}
+  \frametitle{Relevant Published NLP Research}
+  \includegraphics[page=1,height=0.5\textheight,bb=0 0 8.5in 4in,clip]{images/gundlapalli-amia-2013.pdf}
+  \includegraphics[page=1,height=0.5\textheight]{images/mccoy-jama-2016.pdf}
+  \includegraphics[page=1,height=0.5\textheight]{images/patton-npj-2018.pdf}
+
   Doctor's notes:  understanding a Medicare patient's condition to better predict the outcome of a particular surgical procedure\\
   Case worker visitation notes:  predicting job search outcomes using written descriptions of home life\\
   Policy rules:  collecting different states' policies concerning a particular social service (e.g., child abuse prevention) to compare and contrast implementation\\
@@ -244,6 +273,7 @@
   \vfill{}
   Note: None of these are designed explicitly to communicate quantifiable information!
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Course Timeline}
