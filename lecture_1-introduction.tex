@@ -17,8 +17,8 @@
 
 \mode<presentation>
 {
-\usetheme{PrincetonJunction}
-\setbeamercovered{invisible}
+	\usetheme{PrincetonJunction}
+	\setbeamercovered{invisible}
 }
 
 \usetikzlibrary{arrows,arrows.meta,decorations.markings,fit,positioning,calc,shapes.geometric,shapes.symbols,shadows.blur,shadings,decorations.pathmorphing}
@@ -150,69 +150,80 @@ bank, and of having nothing to do\ldots}
 \setbeamercolor{background canvas}{bg=mathematica light neutral}
 
 \begin{frame}[plain]
-\begin{center}
-\begin{tikzpicture}[
-doc/.style={minimum width=2.10cm, minimum height=2.97cm, inner sep=.1 cm, align=left, node font=\tiny\ttfamily, text width=1.90cm, fill=white, draw=black},
-black box/.style={inner sep=.5cm, node font=\huge\bfseries, text=white, fill=mathematica grey, draw=black, thick},
-mathy/.style={inner sep=.5cm, text=black, fill=white, draw=black, thick, rounded corners=0.25cm, align=center},
-idea/.style={starburst, inner sep=0.25cm, text=white, draw=white, fill=mathematica red, ultra thick, node font=\Large\bfseries}
-]
-\begin{scope}[transparency group, visible on=<2->]
-\node[doc, blur shadow, rotate=rand*2] (doc3) {};
-\node[doc, rotate=rand*2] (doc2) at ($(doc3) + (-0.05cm,0.05cm)$) {};
-\node[doc, rotate=rand*2] (doc1) at ($(doc2) + (-0.05cm,0.05cm)$) {\alicetext};
-\end{scope}
+	\begin{center}
+		\begin{tikzpicture}[
+		doc/.style={minimum width=2.10cm, minimum height=2.97cm, inner sep=.1 cm, align=left, node font=\tiny\ttfamily, text width=1.90cm, fill=white, draw=black},
+		black box/.style={inner sep=.5cm, node font=\huge\bfseries, text=white, fill=mathematica grey, draw=black, thick},
+		mathy/.style={inner sep=.5cm, text=black, fill=white, draw=black, thick, rounded corners=0.25cm, align=center},
+		idea/.style={starburst, inner sep=0.25cm, text=white, draw=white, fill=mathematica red, ultra thick, node font=\Large\bfseries}
+		]
+			\begin{scope}[transparency group, visible on=<2->]
+				\node[doc, blur shadow, rotate=rand*2] (doc3) {};
+				\node[doc, rotate=rand*2] (doc2) at ($(doc3) + (-0.05cm,0.05cm)$) {};
+				\node[doc, rotate=rand*2] (doc1) at ($(doc2) + (-0.05cm,0.05cm)$) {\alicetext};
+			\end{scope}
 
-\node[black box, right=of doc2, visible on=<3->] (nlp) {NLP};
-\draw[->, thick, visible on=<3->] (doc2.north east) to [bend left=45] (nlp);
+			\node[black box, right=of doc2, visible on=<3->] (nlp) {NLP};
+			\draw[->, thick, visible on=<3->] (doc2.north east) to [bend left=45] (nlp);
 
-\node[black box, cloud, visible on=<2>] (question) at (nlp) {?};
+			\node[black box, cloud, visible on=<2>] (question) at (nlp) {?};
 
-\node[mathy, right=of nlp] (mat) {
-$\begin{bmatrix}
-	x_{11} & x_{12} & \dots \\
-	x_{21} & x_{22} & \\
-	\vdots & & \ddots \\
-\end{bmatrix}$};
-\draw[->, thick, visible on=<3->] (nlp) to (mat);
+			\node[mathy, right=of nlp] (mat) {
+			$\begin{bmatrix}
+				x_{11} & x_{12} & \dots \\
+				x_{21} & x_{22} & \\
+				\vdots & & \ddots \\
+			\end{bmatrix}$};
+			\draw[->, thick, visible on=<3->] (nlp) to (mat);
 
-\node[mathy, right=of mat] (func) {$f(X) \sim y$};
-\draw[->,thick] (mat) to [bend left=45] (func);
+			\node[mathy, right=of mat] (func) {$f(X) \sim y$};
+			\draw[->,thick] (mat) to [bend left=45] (func);
 
-\node[idea, below=of func] (insight) {Insight!};
-\draw[->,thick] (func) to (insight);
-\draw[->,thick,dashed,visible on=<3->] (nlp) to [bend right=10] (insight);
+			\node[idea, below=of func] (insight) {Insight!};
+			\draw[->,thick] (func) to (insight);
+			\draw[->,thick,dashed,visible on=<3->] (nlp) to [bend right=10] (insight);
 
-\node[anchor=north west, text width=.7\textwidth, align=left] (text) at ($(doc1.south west) + (0, -.8cm)$) {
-\begin{itemize}
-\item Statistical inference is Mathematica's bread \& butter.
-% \begin{itemize}
-% 	\item Map observations (matrix rows) of variables (matrix columns) to outcomes (vector) using linear models.
-% 	\item Variables and outcomes take numeric values.
-% \end{itemize}
-\item<2-> Surveys, interviews, social media, etc. produce copious amounts of human-generated free text.
-% \begin{itemize}
-% 	\item<2-> Free text does not fit into statistical inference algorithms.
-% 	\item<2-> We could pay for lots of people to code the text as numeric variables, but there must be a better way\ldots
-% \end{itemize}
-\item<3-> Enter {\bfseries Natural Language Processing: computer-based methods of converting human-generated text into meaningful quantitative data}.
-\end{itemize}
-};
-\end{tikzpicture}
-\end{center}
+			\node[anchor=north west, text width=.7\textwidth, align=left] (text) at ($(doc1.south west) + (0, -.8cm)$) {
+			\begin{itemize}
+				\item Statistical inference is Mathematica's bread \& butter.
+				% \begin{itemize}
+				% 	\item Map observations (matrix rows) of variables (matrix columns) to outcomes (vector) using linear models.
+				% 	\item Variables and outcomes take numeric values.
+				% \end{itemize}
+				\item<2-> Surveys, interviews, social media, etc. produce copious amounts of human-generated free text.
+				% \begin{itemize}
+				% 	\item<2-> Free text does not fit into statistical inference algorithms.
+				% 	\item<2-> We could pay for lots of people to code the text as numeric variables, but there must be a better way\ldots
+				% \end{itemize}
+				\item<3-> Enter {\bfseries Natural Language Processing: computer-based methods of converting human-generated text into meaningful quantitative data}.
+			\end{itemize}
+			};
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \setbeamercolor{background canvas}{bg=white}
 
+\newcommand{\deftext}[3]{{\huge\bfseries #1}\\[2em]{\color{mathematica grey}#2}\\[3em]#3}
+
 \begin{frame}
-\frametitle{Definition}
-\framesubtitle{(for the purposes of this course)}
-\begin{center}
-\begin{tikzpicture}[]
-\node[text width=5cm, text=mathematica red, anchor=north] (term) {Natural Language Processing};
-\node[right=of term, align=center, text width=7cm] (def)  {``\textit{Computer-based methods} of converting \textit{human-generated text} into \textit{meaningful quantitiative data}.''};
-\end{tikzpicture}
-\end{center}
+	\frametitle{Definition}
+	\framesubtitle{(for the purposes of this course)}
+	\deftext{Natural Language Processing}{/ˈnætʃəɹəl/ /ˈlæŋɡwɪd͡ʒ/ /ˈpɹɑsəsɪŋ/}{``\textit{Computer-based methods} of converting \textit{human-generated text} into \textit{meaningful quantitiative data}.''}
+\end{frame}
+
+\begin{frame}[t]
+	\frametitle{Relevant Published NLP Research}
+	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/gundlapalli-amia-2013.pdf}}
+	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/mccoy-jama-2016.pdf}}
+	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/patton-npj-2018.pdf}}\\
+
+	\begin{itemize}
+		\item Gundlapalli, et al. (2013)--Identifying homelessness in US veterans by processing free-text fields in medical records
+		\item McCoy, et al. (2016)--Stratifying suicide risk for patients discharged from medical or surgical facilities using narritive discharge notes
+		\item Patton, et al. (2018)--Correlating expressions of loss and expressions of aggression in gang-involved youth Twitter data
+	\end{itemize}
+
 \end{frame}
 
 
@@ -229,6 +240,7 @@ $\begin{bmatrix}
 					\node[right=0.5cm of c\i] {Course \i: \label};
 				}
 			\draw[->|, very thick, mathematica red] (0, 0) -- (c1);
+			\node[right=0.5 of c1, text=mathematica red] {Course 1: Introduction and Tokenization};
 		\end{tikzpicture}
 	\end{center}
 	% \begin{enumerate}
@@ -374,25 +386,7 @@ $\begin{bmatrix}
 % 						\end{frame}
 
 
-\begin{frame}[t]
-	\frametitle{Relevant Published NLP Research}
-	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/gundlapalli-amia-2013.pdf}}
-	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/mccoy-jama-2016.pdf}}
-	\tornpaper{\includegraphics[page=1,width=0.3\textwidth,bb=0 7.5in 8.5in 11in,clip]{images/patton-npj-2018.pdf}}\\
 
-	\begin{itemize}
-		\item Gundlapalli, et al. (2013)--Using off-the-shelf NLP tools to quickly review medical records to identify homelessness in US veterans
-		\item McCoy, et al. (2016)--
-	\end{itemize}
-
-	Doctor's notes:  understanding a Medicare patient's condition to better predict the outcome of a particular surgical procedure\\
-	Case worker visitation notes:  predicting job search outcomes using written descriptions of home life\\
-	Policy rules:  collecting different states' policies concerning a particular social service (e.g., child abuse prevention) to compare and contrast implementation\\
-	Interview transcripts:  extracting and highlighting common topics from thousands of on-site interviews to evaluate policy understanding by practitioners\\
-	Academic studies:  detecting and gathering high-quality articles for systematic review
-	\vfill{}
-	Note: None of these are designed explicitly to communicate quantifiable information!
-\end{frame}
 
 
 
