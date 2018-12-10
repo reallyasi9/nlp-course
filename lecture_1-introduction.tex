@@ -148,6 +148,9 @@ bank, and of having nothing to do\ldots}
 % This is a nice color for the background, and provides a good way to highlight
 % charts etc. with a white background.
 \setbeamercolor{background canvas}{bg=mathematica light neutral}
+\pgfmathsetmacro{\docrotone}{rand*2}
+\pgfmathsetmacro{\docrottwo}{rand*2}
+\pgfmathsetmacro{\docrotthree}{rand*2}
 
 \begin{frame}[plain]
 	\begin{center}
@@ -158,9 +161,9 @@ bank, and of having nothing to do\ldots}
 		idea/.style={starburst, inner sep=0.25cm, text=white, draw=white, fill=mathematica red, ultra thick, node font=\Large\bfseries}
 		]
 			\begin{scope}[transparency group, visible on=<2->]
-				\node[doc, blur shadow, rotate=rand*2] (doc3) {};
-				\node[doc, rotate=rand*2] (doc2) at ($(doc3) + (-0.05cm,0.05cm)$) {};
-				\node[doc, rotate=rand*2] (doc1) at ($(doc2) + (-0.05cm,0.05cm)$) {\alicetext};
+				\node[doc, blur shadow, rotate=\docrotthree] (doc3) {};
+				\node[doc, rotate=\docrottwo] (doc2) at ($(doc3) + (-0.05cm,0.05cm)$) {};
+				\node[doc, rotate=\docrotone] (doc1) at ($(doc2) + (-0.05cm,0.05cm)$) {\alicetext};
 			\end{scope}
 
 			\node[black box, right=of doc2, visible on=<3->] (nlp) {NLP};
@@ -185,7 +188,7 @@ bank, and of having nothing to do\ldots}
 
 			\node[anchor=north west, text width=.7\textwidth, align=left] (text) at ($(doc1.south west) + (0, -.8cm)$) {
 			\begin{itemize}
-				\item Statistical inference is Mathematica's bread \& butter.
+				\item<1-> Statistical inference is Mathematica's bread \& butter.
 				% \begin{itemize}
 				% 	\item Map observations (matrix rows) of variables (matrix columns) to outcomes (vector) using linear models.
 				% 	\item Variables and outcomes take numeric values.
@@ -204,7 +207,7 @@ bank, and of having nothing to do\ldots}
 
 \setbeamercolor{background canvas}{bg=white}
 
-\newcommand{\deftext}[3]{{\huge\bfseries #1}\\[2em]{\color{mathematica grey}#2}\\[3em]#3}
+\newcommand{\deftext}[3]{{\Large\bfseries #1}\\[.5em]{\small\color{mathematica grey}#2}\\[2em]#3}
 
 \begin{frame}
 	\frametitle{Definition}
@@ -412,7 +415,7 @@ bank, and of having nothing to do\ldots}
 						\begin{frame}
 							\frametitle{ASCII}
 							Ancient computers communicated everything using bytes.\\
-							\includegraphics[width=.5\textwidth]{images/eniac.jpg}\pause{}\\
+							% \includegraphics[width=.5\textwidth]{images/eniac.jpg}\pause{}\\
 							This was annoying.
 						\end{frame}
 
@@ -506,7 +509,7 @@ bank, and of having nothing to do\ldots}
 							\end{itemize}
 						\end{frame}
 
-						\newfontface\emojifont{NotoEmoji-Regular}
+						% \newfontface\emojifont{NotoEmoji-Regular}
 						\begin{frame}
 							\frametitle{Examples}
 							\begin{table}
@@ -527,15 +530,15 @@ bank, and of having nothing to do\ldots}
 							% 	\end{tabular}
 							% \end{table}
 
-							\begin{table}
-								\small
-								\begin{tabular}{|c|c|c|c|c c c c|c c c c|}
-									\hline
-									48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 \\ \hline
-									H & i & , & \Vtextvisiblespace & \multicolumn{4}{c|}{\emojifont 🇺} & \multicolumn{4}{c|}{\emojifont 🇸} \\ \hline
-									H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
-								\end{tabular}
-							\end{table}
+							% \begin{table}
+							% 	\small
+							% 	\begin{tabular}{|c|c|c|c|c c c c|c c c c|}
+							% 		\hline
+							% 		48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 \\ \hline
+							% 		H & i & , & \Vtextvisiblespace & \multicolumn{4}{c|}{\emojifont 🇺} & \multicolumn{4}{c|}{\emojifont 🇸} \\ \hline
+							% 		H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
+							% 	\end{tabular}
+							% \end{table}
 
 							\begin{table}
 								\small
@@ -557,15 +560,15 @@ bank, and of having nothing to do\ldots}
 								\item Nobody will have any idea what you are talking about.
 							\end{enumerate}
 
-							\begin{table}
-								\small
-								\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-									\hline
-									48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 & 21 \\ \hline
-									H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
-									H & i & , & \Vtextvisiblespace & ð & Ÿ & ‡ & ° & ð & Ÿ & ‡ & ¸ \\ \hline
-								\end{tabular}
-							\end{table}
+							% \begin{table}
+							% 	\small
+							% 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+							% 		\hline
+							% 		48 & 69 & 2c & 20 & f0 & 9f & 87 & ba & f0 & 9f & 87 & b8 & 21 \\ \hline
+							% 		H & i & , & \Vtextvisiblespace & \multicolumn{8}{c|}{\emojifont 🇺🇸} \\ \hline
+							% 		H & i & , & \Vtextvisiblespace & ð & Ÿ & ‡ & ° & ð & Ÿ & ‡ & ¸ \\ \hline
+							% 	\end{tabular}
+							% \end{table}
 						\end{frame}
 
 						\lstset{language=Python}
